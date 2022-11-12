@@ -1,1 +1,2 @@
 Trzeba ogarnąć wykresiki
+wykresiki zrobione, jedyne co to na stronie przedmiotu jest by zrobić histogramy z każdego gatunku i nałożyć na siebie chyba że źle zrozumiałem
