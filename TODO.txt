@@ -1,2 +1,4 @@
 Trzeba ogarnąć wykresiki
 wykresiki zrobione, jedyne co to na stronie przedmiotu jest by zrobić histogramy z każdego gatunku i nałożyć na siebie chyba że źle zrozumiałem
+zrobiłem coś na wzór tego łączonego histogramu, i dodałem żeby zapisywało w oddzielnym folderze bo mnie już wkurwiało zapisywanie w tym samym
+miejscu co kod

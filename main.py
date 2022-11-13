@@ -85,7 +85,7 @@ def odchylenie_standardowe(lista):
 tablica = []
 for i in range(5):
     tablica.append(dane[i])
-print(tablica)
+#print(tablica)
 #od tej lini zaczyna sie kod dla wykresów
 zDlugoscDzialkiK = [4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0]
 zSzerokoscDzialkiK = [2.0,2.2,2.4,2.6,2.8,3.0,3.2,3.4,3.6,3.8,4.0]
@@ -98,6 +98,7 @@ podpisXh=['Długość (cm)', 'Szerokość (cm)','Długość (cm)', 'Szerokość 
 podpisYh='Liczebność'
 plikName = ["DlugoscDzialkiK.jpg","SzerokoscDzialkiK.jpg","DlugoscPlatka.jpg","SzerokoscPlatka.jpg"]
 plikboxName =["DlugoscDzialkiGat.jpg","SzerokoscDzialkiGat.jpg","DlugoscPlatkaGat.jpg","SzerokoscPlatkaGat.jpg"] 
+savePlace = "./wykresy/"
 for i in range(4):
     plt.figure(figsize=(5,4),dpi=300)
     plt.title(title[i])
@@ -105,18 +106,27 @@ for i in range(4):
     plt.ylabel(podpisYh)
     plt.xticks(zakres[i])
     plt.hist(tablica[i],bins=zakres[i],edgecolor="black")
-    plt.savefig(plikName[i],dpi=300)
+    plt.savefig(savePlace+plikName[i],dpi=300)
     plt.figure(figsize=(5,3),dpi=300)
     #tu zakomentowałem bo nwm czy jakiś tytuł do boxplota dawać
     #plt.title(title[i]+" z podziałem na gatunki")
     plt.boxplot([setosa[i],vcolor[i],virgin[i]],labels=podpisXb)
-    plt.savefig(plikboxName[i],dpi=300)
+    plt.savefig(savePlace+plikboxName[i],dpi=300)
+    plt.figure(figsize=(5,4),dpi=300)
+    #tu nie ma narazie tytułu wykresów
+    plt.xlabel(podpisXh[i])
+    plt.ylabel(podpisYh)
+    plt.xticks(zakres[i])
+    plt.hist(setosa[i],bins=zakres[i],alpha=0.3,edgecolor="magenta",label="Setosa")
+    plt.hist(vcolor[i],bins=zakres[i],alpha=0.3,edgecolor="darkred",label="Vcolor")
+    plt.hist(virgin[i],bins=zakres[i],alpha=0.3,edgecolor="darkgreen",label="virgin")
+    plt.legend()   
+    plt.savefig(savePlace+"Combined"+plikName[i],dpi=300)
 #tu sie on kończy
-gatunki = zliczanie(tablica[4])
-print(gatunki)
-udzial_procentowy(gatunki)
-#plt.boxplot([setosa[0],vcolor[0],virgin[0]])
-#plt.show()
+#wszystko zakomentowałem bo nwm co jest potrzebne jeszcze a co można wyjebać
+#gatunki = zliczanie(tablica[4])
+#print(gatunki)
+#udzial_procentowy(gatunki)
 # kwartyl1(tablica[0])
 # print(max(dane[i]), "\t", min(dane[i]), "\t", )
 # print("\n")
