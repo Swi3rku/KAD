@@ -1,7 +1,5 @@
-import numpy
 import pandas as pd
 import math
-import matplotlib
 import matplotlib.pyplot as plt
 
 
@@ -9,8 +7,8 @@ dane = pd.read_csv("data.csv", header=None)
 liczba_gatunkow = 3
 liczba_rekordow = len(dane)
 setosa = dane.loc[dane.iloc[:, 4] == 0]
-vcolor = dane.loc[dane.iloc[:, 4] == 1]
-virgin = dane.loc[dane.iloc[:, 4] == 2]
+versicolor = dane.loc[dane.iloc[:, 4] == 1]
+virginica = dane.loc[dane.iloc[:, 4] == 2]
 
 
 def zliczanie(lista):
@@ -58,7 +56,7 @@ def mediana(lista):
         med = (lista[int(len(lista) / 2)] + lista[int(len(lista) / 2) - 1]) / 2
     else:
         med = lista[int(len(lista) / 2)]
-    return round(med)
+    return round(med, 2)
 
 
 def kwartyl(lista, nr_kwartylu):
@@ -66,7 +64,6 @@ def kwartyl(lista, nr_kwartylu):
         lista = lista.tolist()
     lista.sort()
     kwartyl = lista[int(nr_kwartylu / 4 * len(lista))]
-    # print(int(nr_kwartylu/4*len(lista))+1)
     return round(kwartyl, 2)
 
 
@@ -82,11 +79,8 @@ def odchylenie_standardowe(lista):
     return round(pom, 2)
 
 
-tablica = []
-for i in range(5):
-    tablica.append(dane[i])
-#print(tablica)
-#od tej lini zaczyna sie kod dla wykresów
+
+
 zDlugoscDzialkiK = [4.0,4.5,5.0,5.5,6.0,6.5,7.0,7.5,8.0]
 zSzerokoscDzialkiK = [2.0,2.2,2.4,2.6,2.8,3.0,3.2,3.4,3.6,3.8,4.0]
 zDlugoscPlatka = [1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5,7.0]
@@ -97,47 +91,36 @@ podpisXb=['setosa','versicolor','virginica']
 podpisXh=['Długość (cm)', 'Szerokość (cm)','Długość (cm)', 'Szerokość (cm)']
 podpisYh='Liczebność'
 plikName = ["DlugoscDzialkiK.jpg","SzerokoscDzialkiK.jpg","DlugoscPlatka.jpg","SzerokoscPlatka.jpg"]
-plikboxName =["DlugoscDzialkiGat.jpg","SzerokoscDzialkiGat.jpg","DlugoscPlatkaGat.jpg","SzerokoscPlatkaGat.jpg"] 
-savePlace = "./wykresy/"
+plikboxName =["DlugoscDzialkiGat.jpg","SzerokoscDzialkiGat.jpg","DlugoscPlatkaGat.jpg","SzerokoscPlatkaGat.jpg"]
 for i in range(4):
     plt.figure(figsize=(5,4),dpi=300)
     plt.title(title[i])
     plt.xlabel(podpisXh[i])
     plt.ylabel(podpisYh)
     plt.xticks(zakres[i])
-    plt.hist(tablica[i],bins=zakres[i],edgecolor="black")
-    plt.savefig(savePlace+plikName[i],dpi=300)
-    plt.figure(figsize=(5,3),dpi=300)
-    #tu zakomentowałem bo nwm czy jakiś tytuł do boxplota dawać
-    #plt.title(title[i]+" z podziałem na gatunki")
-    plt.boxplot([setosa[i],vcolor[i],virgin[i]],labels=podpisXb)
-    plt.savefig(savePlace+plikboxName[i],dpi=300)
+    plt.hist(dane[i],bins=zakres[i],edgecolor="black")
+    plt.savefig(plikName[i],dpi=300)
     plt.figure(figsize=(5,4),dpi=300)
-    #tu nie ma narazie tytułu wykresów
+    plt.boxplot([setosa[i], versicolor[i], virginica[i]], labels=podpisXb)
+    plt.savefig(plikboxName[i],dpi=300)
+    plt.figure(figsize=(5,4),dpi=300)
     plt.xlabel(podpisXh[i])
     plt.ylabel(podpisYh)
     plt.xticks(zakres[i])
+    plt.title(title[i])
     plt.hist(setosa[i],bins=zakres[i],alpha=0.3,edgecolor="magenta",label="Setosa")
-    plt.hist(vcolor[i],bins=zakres[i],alpha=0.3,edgecolor="darkred",label="Vcolor")
-    plt.hist(virgin[i],bins=zakres[i],alpha=0.3,edgecolor="darkgreen",label="virgin")
-    plt.legend()   
-    plt.savefig(savePlace+"Combined"+plikName[i],dpi=300)
-#tu sie on kończy
-#wszystko zakomentowałem bo nwm co jest potrzebne jeszcze a co można wyjebać
-#gatunki = zliczanie(tablica[4])
-#print(gatunki)
-#udzial_procentowy(gatunki)
-# kwartyl1(tablica[0])
-# print(max(dane[i]), "\t", min(dane[i]), "\t", )
-# print("\n")
-# print(dane)
-# wycięte z pętli
-   # print(i)
-   # print("max", maksimum(tablica[i]), "\tmin", minimum(tablica[i]))
-   # print("avg", srednia(tablica[i]), "\tmed", mediana(tablica[i]))
-   # print("kw1", kwartyl(tablica[i], 1), "\tkw3", kwartyl(tablica[i], 3))
-   # print("oSt", odchylenie_standardowe(tablica[i]))
-   # plt.hist(tablica[i], bins=8)
-    #plt.show()
-    #plt.boxplot(tablica[i], positions=[0, 4])
-    #plt.show()
+    plt.hist(versicolor[i], bins=zakres[i], alpha=0.3, edgecolor="darkred", label="Versicolor")
+    plt.hist(virginica[i], bins=zakres[i], alpha=0.3, edgecolor="darkgreen", label="Virginica")
+    plt.legend()
+    plt.savefig("Combined"+plikName[i],dpi=300)
+
+gatunki = zliczanie(dane[4])
+print("Liczność gatunków")
+print(gatunki)
+udzial_procentowy(gatunki)
+for i in range(4):
+   print(title[i])
+   print("Maksimum", maksimum(dane[i]), "\tMinimum", minimum(dane[i]))
+   print("średnia", srednia(dane[i]), "\tmediana", mediana(dane[i]))
+   print("Q1", kwartyl(dane[i], 1), "\t\t\tQ2", kwartyl(dane[i], 3))
+   print("odch. stand. ", odchylenie_standardowe(dane[i]))
