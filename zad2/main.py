@@ -1,6 +1,7 @@
 import pandas as pd
 import math
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 dane = pd.read_csv("data.csv", header=None)
@@ -90,45 +91,96 @@ podpis = ["Długość działki kielicha (cm)","Szerokość działki kielicha (cm
 #   0 - setosa
 #   1 - versicolor
 #   2 - virginica
-# wykresy z x na Długość działki kielicha
-plt.figure(figsize=(5,4),dpi=300)
-plt.scatter(dane[0],dane[1],s=80)
-plt.xticks(ticks=[4,5,6,7,8])
-plt.xlabel(podpis[0]);
-plt.ylabel(podpis[1])
-plt.show()
-plt.figure(figsize=(5,4),dpi=300)
-plt.scatter(dane[0],dane[2],s=80)
-plt.xticks(ticks=[4,5,6,7,8])
-plt.xlabel(podpis[0]);
-plt.ylabel(podpis[2])
-plt.show()
-plt.figure(figsize=(5,4),dpi=300)
-plt.scatter(dane[0],dane[3],s=80)
-plt.xticks(ticks=[4,5,6,7,8])
-plt.xlabel(podpis[0]);
-plt.ylabel(podpis[3])
-plt.show()
-#wykresy z x na Szerokość działki kielicha
-plt.figure(figsize=(5,4),dpi=300)
-plt.scatter(dane[1],dane[2],s=80)
-plt.xticks(ticks=[4,5,6,7,8])
-plt.xlabel(podpis[1]);
-plt.ylabel(podpis[2])
-plt.show()
-plt.figure(figsize=(5,4),dpi=300)
-plt.scatter(dane[1],dane[3],s=80)
-plt.xticks(ticks=[4,5,6,7,8])
-plt.xlabel(podpis[1]);
-plt.ylabel(podpis[3])
-plt.show()
-#wykres z x na Długość płatka (cm)
+
+#to działa, raczej nic do zmiany nie ma
+labels = ["DDK_SDK","DDK_DP","DDK_SP"]
+x = np.linspace(4,8,5)
+for i in range(3):
+    plt.figure(figsize=(5,4),dpi=300)
+    plt.scatter(dane[0],dane[i+1],s=80)
+    a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[0],dane[i+1])
+    b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[0],dane[i+1])
+    y = a*x+b
+    plt.plot(x,y,"r")
+    plt.xticks(x)
+    plt.xlabel(podpis[0]);
+    plt.ylabel(podpis[i+1])
+    plt.savefig(labels[i]+"jpg")
+    plt.show()
+
+#tu razie praca(chyba ok)
+labels = ["SDK_DP","SDK_SP"]
+x = np.linspace(2,4.5,6)
+for i in range(2):
+    plt.figure(figsize=(5,4),dpi=300)
+    plt.scatter(dane[1],dane[i+2],s=80)
+    a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[1],dane[i+2])
+    b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[1],dane[i+2])
+    y = a*x+b
+    plt.plot(x,y,"r")
+    plt.xticks(x)
+    plt.xlabel(podpis[1]);
+    plt.ylabel(podpis[i+2])
+    plt.savefig(labels[i]+"jpg")
+    plt.show()
+
+labels = "DP_SP"
+x = np.linspace(1,7,7)
 plt.figure(figsize=(5,4),dpi=300)
 plt.scatter(dane[2],dane[3],s=80)
-plt.xticks(ticks=[4,5,6,7,8])
+a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[2],dane[3])
+b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[2],dane[3])
+y = a*x+b
+plt.plot(x,y,"r")
+plt.xticks(x)
 plt.xlabel(podpis[2]);
 plt.ylabel(podpis[3])
+plt.savefig(labels+"jpg")
 plt.show()
+## wykresy z x na Długość działki kielicha
+#x = np.linspace(4,8,100)
+#plt.figure(figsize=(5,4),dpi=300)
+#plt.scatter(dane[0],dane[1],s=80)
+#a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[0],dane[1])
+#b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[0],dane[1])
+#y = a*x+b
+#plt.plot(x,y,"r")
+#plt.xticks(ticks=[4,5,6,7,8])
+#plt.xlabel(podpis[0]);
+#plt.ylabel(podpis[1])
+#plt.show()
+#plt.figure(figsize=(5,4),dpi=300)
+#plt.scatter(dane[0],dane[2],s=80)
+#plt.xticks(ticks=[4,5,6,7,8])
+#plt.xlabel(podpis[0]);
+#plt.ylabel(podpis[2])
+#plt.show()
+#plt.figure(figsize=(5,4),dpi=300)
+#plt.scatter(dane[0],dane[3],s=80)
+#plt.xticks(ticks=[4,5,6,7,8])
+#plt.xlabel(podpis[0]);
+#plt.ylabel(podpis[3])
+#plt.show()
+#wykresy z x na Szerokość działki kielicha
+#plt.figure(figsize=(5,4),dpi=300)
+#plt.scatter(dane[1],dane[2],s=80)
+#plt.xticks(ticks=[4,5,6,7,8])
+#plt.xlabel(podpis[1]);
+#plt.ylabel(podpis[2])
+#plt.show()
+#plt.figure(figsize=(5,4),dpi=300)
+#plt.scatter(dane[1],dane[3],s=80)
+#plt.xticks(ticks=[4,5,6,7,8])
+#plt.xlabel(podpis[1]);
+#plt.ylabel(podpis[3])
+#plt.show()
+#wykres z x na Długość płatka (cm)
+#plt.figure(figsize=(5,4),dpi=300)
+#plt.scatter(dane[2],dane[3],s=80)
+#plt.xticks(ticks=[4,5,6,7,8])
+#plt.xlabel(podpis[2]);
+#plt.ylabel(podpis[3])
+#plt.show()
 
 for i in range(5):
     for j in range(i+1,4):
