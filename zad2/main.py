@@ -36,7 +36,7 @@ def suma(lista):
     return suma
 
 def sumaKwadratow(lista):
-    suma=0;
+    suma=0
     for x in range(len(lista)):
         suma+=lista[x]**2
     return suma
@@ -77,115 +77,34 @@ def wspolczynnik_B_RownaniaRegresjiLiniowej(listaX,listaY):
     return b
 
 podpis = ["Długość działki kielicha (cm)","Szerokość działki kielicha (cm)", "Długość płatka (cm)","Szerokość płatka (cm)"]
-#for i in range(4):
-#    plt.figure(figsize=(5,4),dpi=300)
-#    #plt.title(title[i])
-#    plt.scatter(dane[0],dane[1],s=80)
 
-#Atrybuty (kolumny):
-#0. długość działki kielicha (ang. sepal length) [cm]
-#1. szerokość działki kielicha (ang. sepal width) [cm]
-#2. długość płatka (ang. petal length) [cm]
-#3. szerokość płatka (ang. petal width) [cm]
-#4. gatunek (ang. species):
-#   0 - setosa
-#   1 - versicolor
-#   2 - virginica
 
-#to działa, raczej nic do zmiany nie ma
-labels = ["DDK_SDK","DDK_DP","DDK_SP"]
-x = np.linspace(4,8,5)
-for i in range(3):
-    plt.figure(figsize=(5,4),dpi=300)
-    plt.scatter(dane[0],dane[i+1],s=80)
-    a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[0],dane[i+1])
-    b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[0],dane[i+1])
-    y = a*x+b
-    plt.plot(x,y,"r")
-    plt.xticks(x)
-    plt.xlabel(podpis[0]);
-    plt.ylabel(podpis[i+1])
-    plt.savefig(labels[i]+"jpg")
-    plt.show()
-
-#tu razie praca(chyba ok)
-labels = ["SDK_DP","SDK_SP"]
-x = np.linspace(2,4.5,6)
-for i in range(2):
-    plt.figure(figsize=(5,4),dpi=300)
-    plt.scatter(dane[1],dane[i+2],s=80)
-    a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[1],dane[i+2])
-    b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[1],dane[i+2])
-    y = a*x+b
-    plt.plot(x,y,"r")
-    plt.xticks(x)
-    plt.xlabel(podpis[1]);
-    plt.ylabel(podpis[i+2])
-    plt.savefig(labels[i]+"jpg")
-    plt.show()
-
-labels = "DP_SP"
-x = np.linspace(1,7,7)
-plt.figure(figsize=(5,4),dpi=300)
-plt.scatter(dane[2],dane[3],s=80)
-a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[2],dane[3])
-b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[2],dane[3])
-y = a*x+b
-plt.plot(x,y,"r")
-plt.xticks(x)
-plt.xlabel(podpis[2]);
-plt.ylabel(podpis[3])
-plt.savefig(labels+"jpg")
-plt.show()
-## wykresy z x na Długość działki kielicha
-#x = np.linspace(4,8,100)
-#plt.figure(figsize=(5,4),dpi=300)
-#plt.scatter(dane[0],dane[1],s=80)
-#a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[0],dane[1])
-#b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[0],dane[1])
-#y = a*x+b
-#plt.plot(x,y,"r")
-#plt.xticks(ticks=[4,5,6,7,8])
-#plt.xlabel(podpis[0]);
-#plt.ylabel(podpis[1])
-#plt.show()
-#plt.figure(figsize=(5,4),dpi=300)
-#plt.scatter(dane[0],dane[2],s=80)
-#plt.xticks(ticks=[4,5,6,7,8])
-#plt.xlabel(podpis[0]);
-#plt.ylabel(podpis[2])
-#plt.show()
-#plt.figure(figsize=(5,4),dpi=300)
-#plt.scatter(dane[0],dane[3],s=80)
-#plt.xticks(ticks=[4,5,6,7,8])
-#plt.xlabel(podpis[0]);
-#plt.ylabel(podpis[3])
-#plt.show()
-#wykresy z x na Szerokość działki kielicha
-#plt.figure(figsize=(5,4),dpi=300)
-#plt.scatter(dane[1],dane[2],s=80)
-#plt.xticks(ticks=[4,5,6,7,8])
-#plt.xlabel(podpis[1]);
-#plt.ylabel(podpis[2])
-#plt.show()
-#plt.figure(figsize=(5,4),dpi=300)
-#plt.scatter(dane[1],dane[3],s=80)
-#plt.xticks(ticks=[4,5,6,7,8])
-#plt.xlabel(podpis[1]);
-#plt.ylabel(podpis[3])
-#plt.show()
-#wykres z x na Długość płatka (cm)
-#plt.figure(figsize=(5,4),dpi=300)
-#plt.scatter(dane[2],dane[3],s=80)
-#plt.xticks(ticks=[4,5,6,7,8])
-#plt.xlabel(podpis[2]);
-#plt.ylabel(podpis[3])
-#plt.show()
-
+labels = ["DDK_SDK","DDK_DP","DDK_SP","SDK_DP","SDK_SP","DP_SP"]
+x = [np.linspace(4,8,5), np.linspace(2,4.5,6), np.linspace(1,7,7)]
+pom=0
 for i in range(5):
     for j in range(i+1,4):
         print(i,j)
         print(wspolczynnikKorelacjiLiniowejPearsona(dane[i],dane[j]))
         print(wspolczynnik_A_RownaniaRegresjiLiniowej(dane[i],dane[j]))
         print(wspolczynnik_B_RownaniaRegresjiLiniowej(dane[i],dane[j]))
+        plt.figure(figsize=(5,4),dpi=300)
+        plt.scatter(dane[i],dane[j],s=80)
+        a = wspolczynnik_A_RownaniaRegresjiLiniowej(dane[i],dane[j])
+        b = wspolczynnik_B_RownaniaRegresjiLiniowej(dane[i],dane[j])
+        r = wspolczynnikKorelacjiLiniowejPearsona(dane[i],dane[j])
+        title = "r = "+"{:.2f}".format(r)+"; y = "+"{:.1f}".format(a)+"x + "+"{:.1f}".format(b)
+        if b<0:
+            title = "r = "+"{:.2f}".format(r)+"; y = "+"{:.1f}".format(a)+"x + "+"("+"{:.1f}".format(b)+")"
+        plt.title(title)
+        y = a*x[i]+b
+        plt.plot(x[i],y,"r")
+        plt.xticks(x[i])
+        plt.xlabel(podpis[i])
+        plt.ylabel(podpis[j])
+        plt.savefig(labels[pom])
+        plt.show()
+        pom+=1
+
+
 
