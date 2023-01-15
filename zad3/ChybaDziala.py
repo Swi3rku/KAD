@@ -148,17 +148,17 @@ for i in range(4):
 
         plt.figure(figsize=(5,4),dpi=300)
         # #grupa + kolor
-        plt.scatter(tmp[0][0],tmp[0][1],s=80, color='red',label="grupa 1")
-        plt.scatter(centroidy[0][0],centroidy[0][1],s=80, color='red',label="grupa 1", marker="D", edgecolor="black")
+        plt.scatter(tmp[0][i],tmp[0][j],s=80, color='red',label="grupa 1")
+        plt.scatter(centroidy[0][i],centroidy[0][j],s=80, color='red',label="grupa 1", marker="D", edgecolor="black")
         #
         #
         # #grupa + kolor
-        # plt.scatter(tmp[1][i],tmp[1][j],s=80, color='green',label="grupa 2")
-        # plt.scatter(centroidy[1][0],centroidy[1][1],s=80, color='green',label="grupa 2", marker="D", edgecolor="black")
+        plt.scatter(tmp[1][i],tmp[1][j],s=80, color='green',label="grupa 2")
+        plt.scatter(centroidy[1][i],centroidy[1][j],s=80, color='green',label="grupa 2", marker="D", edgecolor="black")
 
         #grupa + kolor
-        # plt.scatter(tmp[2][i],tmp[2][j],s=80, color='yellow',label="grupa 3")
-        # plt.scatter(centroidy[2][0],centroidy[2][1],s=80, color='yellow',label="grupa 3", marker="D", edgecolor="black")
+        plt.scatter(tmp[2][i],tmp[2][j],s=80, color='yellow',label="grupa 3")
+        plt.scatter(centroidy[2][i],centroidy[2][j],s=80, color='yellow',label="grupa 3", marker="D", edgecolor="black")
         plt.show()
 
 
