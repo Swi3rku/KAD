@@ -91,10 +91,11 @@ plt.figure(figsize=(5,4),dpi=300)
 #grupa + kolor
 plt.scatter(probne[0],probne[1],s=80, color='red',label="grupa 1")
 #poprostu tworzymy kolejne wykresy i dajemy dla nich kolor, 
-#można potem ewentualnie dodać legende
+#można potem ewentualnie dodać legende, wtedy dajemy label="nazwa"
 plt.scatter(probne[2],probne[3],s=80, color='green',label="grupa 2")
 #znacznik pozycji 'średniej' grupy
 plt.scatter([2],[3],s=80, color='green',marker='d',label="grupa 2")
+#i tak generujemy
 plt.legend()
 #plt.scatter(dane[i],dane[j],s=80)
 #plt.scatter(dane[i],dane[j],s=80)
