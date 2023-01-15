@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 
 
 liczba_klastrow = 3
+
 dane = pd.read_csv("data_test.csv", header=None)
     # centroidy = []
     # klastry = []
@@ -18,7 +19,7 @@ def odleglosc(pkt1, pkt2):
 def losoweCentroidy(lista, centroidy):
     for i in range(liczba_klastrow):
         centroidy.append(random.choice(lista))
-    print("centroidy",centroidy)
+    # print("centroidy",centroidy)
 
 def przypisanieDoKlastrow(klastry, lista, centroidy):
     klastry=zerowanieKlastrow(klastry)
@@ -67,6 +68,7 @@ def k_srednich(lista1, lista2, lista3, lista4):
     #3. aktualizacja położenia centroidów
     noweCentroidy = []
     pierwszeWejscie=True
+    iteracje=0
     while(centroidy!=noweCentroidy):
         if(pierwszeWejscie==False):
             for k in range(len(centroidy)):
@@ -86,9 +88,9 @@ def k_srednich(lista1, lista2, lista3, lista4):
             if not klastry[i]:
                 pom1=-1
                 pom2=-1
-                # pom3=-1
+                pom3=-1
                 # pom4=-1
-                return pom1,pom2
+                return pom1,pom2, pom3
             # print("klastry[i]",klastry[i])
             # print(len(klastry[i]))
             avgX/=len(klastry[i])
@@ -104,7 +106,8 @@ def k_srednich(lista1, lista2, lista3, lista4):
             avgW=round(avgW,2)
             noweCentroidy.append([avgX,avgY,avgZ,avgW])
         pierwszeWejscie=False
-    return centroidy, klastry
+        iteracje+=1
+    return centroidy, klastry, iteracje
 
 def doWykresu(lista):
     x=[]
@@ -121,13 +124,14 @@ def doWykresu(lista):
 def test(lista1, lista2, lista3, lista4):
     pom1 = -1
     pom2 = -1
+    pom3 = -1
     while(pom1==-1 or pom2==-1):
-        pom1, pom2 = k_srednich(lista1, lista2, lista3, lista4)
-    return pom1,pom2
+        pom1, pom2, pom3 = k_srednich(lista1, lista2, lista3, lista4)
+    return pom1, pom2, pom3
 
 def wcss(klastry, centroidy):
     suma=0
-    print(len(klastry))
+    # print(len(klastry))
     for i in range(len(klastry)):
         for j in range(len(klastry[i])):
             for k in range(4):
@@ -136,9 +140,8 @@ def wcss(klastry, centroidy):
 
 
 
-
-centroidy, klastry = test(dane[0], dane[1], dane[2],dane[3])
-print("centr", centroidy)
+centroidy, klastry, iterazzJe = test(dane[0], dane[1], dane[2],dane[3])
+# print("centr", centroidy)
 tmp = []
 for i in range(3):
     pom=[]
@@ -148,7 +151,11 @@ for i in range(3):
     pom.append(z)
     pom.append(w)
     tmp.append(pom)
-print("tmp",tmp)
+# print("tmp",tmp)
+
+podpis = ["Długość działki kielicha (cm)","Szerokość działki kielicha (cm)", "Długość płatka (cm)","Szerokość płatka (cm)"]
+labels = ["DDK_SDK","DDK_DP","DDK_SP","SDK_DP","SDK_SP","DP_SP"]
+pomTMP=0
 for i in range(4):
     for j in range(i+1,4):
         print("i",i," j",j)
@@ -163,16 +170,24 @@ for i in range(4):
         plt.scatter(centroidy[1][i],centroidy[1][j],s=80, color='green',label="grupa 2", marker="D", edgecolor="black")
 
         #grupa3
-        plt.scatter(tmp[2][i],tmp[2][j],s=80, color='yellow',label="grupa 3")
-        plt.scatter(centroidy[2][i],centroidy[2][j],s=80, color='yellow',label="grupa 3", marker="D", edgecolor="black")
+        plt.scatter(tmp[2][i],tmp[2][j],s=80, color='blue',label="grupa 3")
+        plt.scatter(centroidy[2][i],centroidy[2][j],s=80, color='blue',label="grupa 3", marker="D", edgecolor="black")
+        plt.xlabel(podpis[i])
+        plt.ylabel(podpis[j])
+        plt.savefig(labels[pomTMP])
+        pomTMP+=1
         plt.show()
 
 wartoscWCSS = [0,0,0,0,0,0,0,0,0]
 for i in range(2, 11):
     liczba_klastrow=i
-    centroidy, klastry=test(dane[0], dane[1], dane[2],dane[3])
+    centroidy, klastry, liczbaIteracji=test(dane[0], dane[1], dane[2],dane[3])
     wartoscWCSS[i-2] = wcss(klastry, centroidy)
 print(wartoscWCSS)
-plt.figure(figsize=(5,4),dpi=300)
+print("liczbaIteracji ", liczbaIteracji)
+# plt.figure(figsize=(5,4),dpi=300)
 plt.plot([2,3,4,5,6,7,8,9,10],wartoscWCSS,linestyle='-')
+plt.xlabel("k")
+plt.ylabel("WCSS")
+plt.savefig("WCSS_K")
 plt.show()
