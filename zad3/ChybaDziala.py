@@ -7,14 +7,16 @@ from matplotlib import pyplot as plt
 
 liczba_klastrow = 3
 
-dane = pd.read_csv("data_test.csv", header=None)
+dane = pd.read_csv("data.csv", header=None)
     # centroidy = []
     # klastry = []
     # for i in range(liczba_klastrow):
     #     klastry.append([])
 
+
 def odleglosc(pkt1, pkt2):
     return math.sqrt((pkt2[0]-pkt1[0])**2+(pkt2[1]-pkt1[1])**2+(pkt2[2]-pkt1[2])**2+(pkt2[3]-pkt1[3])**2)
+
 
 def losoweCentroidy(lista, centroidy):
     for i in range(liczba_klastrow):
@@ -137,7 +139,6 @@ def wcss(klastry, centroidy):
             for k in range(4):
                 suma+=(klastry[i][j][k]-centroidy[i][k])**2
     return round(suma, 3)
-
 
 
 centroidy, klastry, iterazzJe = test(dane[0], dane[1], dane[2],dane[3])
